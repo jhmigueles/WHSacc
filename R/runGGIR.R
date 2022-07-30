@@ -48,7 +48,7 @@ runGGIR = function() {
   cat(paste0(rep("_", options()$width), collapse = ""))
   outputdir = dirname(zipdir)
 
-  cat("Should the output files and datasets be stored in", paste0(outputdir,"?"))
+  cat("\nShould the output files and datasets be stored in", paste0(outputdir,"?"))
   cat("\n1: Yes\n2: No\n")
   moveon = readline(prompt = 'Answer: ')
   if (moveon == "2") {
