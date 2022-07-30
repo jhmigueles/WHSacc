@@ -51,8 +51,10 @@ unzipWHSfiles = function(WHSfiles) {
         }
         newfile = file.path(datadir, basename(newname))
 
-        R.utils::gunzip(WHSfiles[i], remove = FALSE,
-                        destname = newfile)
+        if (!file.exists(newfile)) {
+          R.utils::gunzip(WHSfiles[i], remove = FALSE,
+                          destname = newfile)
+        }
       }
     } else if (format == "7z") {
       archive::archive_extract(WHSfiles[i],
@@ -73,6 +75,8 @@ unzipWHSfiles = function(WHSfiles) {
   files2process = c(dir(datadir, full.names = TRUE), keep)
   files2process = gsub("\\", "/", files2process, fixed = TRUE)
 
-  return(files2process)
+  cat("\nFiles unzipped\n\n")
+
+  invisible(files2process)
 
 }
