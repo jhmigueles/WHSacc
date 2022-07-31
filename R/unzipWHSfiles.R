@@ -7,8 +7,8 @@
 #' @return datadir definition for GGIR
 #' @export
 #'
-#' @import archive
-#' @import R.utils
+#' @importFrom archive archive_extract
+#' @importFrom R.utils gunzip
 #'
 unzipWHSfiles = function(WHSfiles) {
 
