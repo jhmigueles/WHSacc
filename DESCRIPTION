@@ -1,7 +1,7 @@
 Package: WHSacc
 Type: Package
 Title: R Package to automatically process WHS files with GGIR
-Version: 0.1.0
+Version: 1.0.0
 Author: Jairo Hidalgo Migueles
 Maintainer: Jairo Hidalgo Migueles <jairo.hidalgo.migueles@gmail.com>
 Description: This package has been specifically written to process the Women's Health Study accelerometer files using GGIR.

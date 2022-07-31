@@ -1,3 +1,5 @@
+# WHSacc 1.0.0
+
 \name{NEWS}
 \title{News for Package \pkg{actigraphcounts}}
 
