@@ -10,14 +10,14 @@
 runGGIR = function(interactive = TRUE) {
 
   # before starting, make sure we work with GGIR v.2.7.2 or newer and archive v.1.1.5
-  if (packageVersion("GGIR") < "2.7.3" & packageVersion("archive") < "1.1.5") {
+  if (packageVersion("GGIR") < "2.7.4" & packageVersion("archive") < "1.1.5") {
     cat("Please, update the GGIR and the archive packages before running WHSacc:\n
          1 - restart the R session\n
          2 - devtools::install_github('wadpac/GGIR')
          3 - install.packages('archive')\n")
     stop()
-  } else if (packageVersion("GGIR") < "2.7.3" | packageVersion("archive") < "1.1.5") {
-    package = ifelse(packageVersion("GGIR") < "2.7.3", "GGIR", "archive")
+  } else if (packageVersion("GGIR") < "2.7.4" | packageVersion("archive") < "1.1.5") {
+    package = ifelse(packageVersion("GGIR") < "2.7.4", "GGIR", "archive")
     stop(cat("Please, update", package, "before running WHSacc:\n",
              "1 - restart the R session\n",
              ifelse(package == "GGIR", "2 - devtools::install_github('wadpac/GGIR')",
