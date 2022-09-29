@@ -27,7 +27,7 @@ runGGIR = function(interactive = TRUE) {
   # 1 - select files ----
   if (interactive) {
     zipfiles = invisible(choose.files(caption = "Select the accelerometer files to process",
-                                           multi = TRUE))
+                                      multi = TRUE))
     zipfiles = gsub('\\\\', '/', zipfiles)
     zipdir = dirname(zipfiles)
   } else {
@@ -105,7 +105,7 @@ runGGIR = function(interactive = TRUE) {
                datadir = datadir,
                outputdir = outputdir,
                studyname = "WHS_acc",
-               overwrite = overwrite,
+               overwrite = FALSE,
                desiredtz = "US/Eastern",
                idloc = 6,
 
@@ -113,10 +113,6 @@ runGGIR = function(interactive = TRUE) {
                do.imp = FALSE,
                ignorenonwear = FALSE,
                windowsizes = c(5, 300, 3600), # higher resolution in the nonwear detection
-
-               # Study protocol
-               strategy = 1,
-               hrs.del.start = 0, hrs.del.end = 0,
 
                # data cleaning
                includedaycrit = 8,
@@ -129,14 +125,9 @@ runGGIR = function(interactive = TRUE) {
                            (1440 - 15)/1440,   # M15
                            (1440 - 10)/1440,   # M10
                            (1440 - 5)/1440),   # M5
-               ilevels = c(),
                mvpathreshold = 70,
-               boutcriter = 0.8, bout.metric = 6,
-               epochvalues2csv = FALSE,
 
                #G.PART3-4: SLEEP CLASSIFICATION
-               def.noc.sleep = 1,
-               relyonguider = FALSE,
                constrain2range = TRUE,
                possible_nap_window = c(9, 18),
                possible_nap_dur = c(30, 180),
@@ -174,9 +165,12 @@ runGGIR = function(interactive = TRUE) {
   daypath = grep("daysummary_full_MM", datasets, value = TRUE)
   daysummary = read.csv(daypath)
 
-  # keep only days with >8h of wear data
-  dur_day_wear_min = daysummary$dur_day_min * (100 - daysummary$nonwear_perc_day) / 100
-  remove = which(is.na(dur_day_wear_min) | dur_day_wear_min < 8*60 |
-                   is.na(daysummary$sleeponset) | is.na(daysummary$wakeup))
-  daysummary_clean = daysummary[-remove,]
+  # make average week report based in clean data
+  cleanReports = aggregate_per_file(fullreport = daysummary, includenightcrit = 0, includedaycrit = 10,
+                                    include24hcrit = 10, data_cleaning_file = c())
+
+  # Save clean reports
+  write.csv(cleanReports$person, paste0(outputdir, "/personsummary.csv"), row.names = F)
+  write.csv(cleanReports$day, paste0(outputdir, "/daysummary.csv"), row.names = F)
+  write.csv(cleanReports$cleaning, paste0(outputdir, "/cleaning_report.csv"), row.names = F)
 }
